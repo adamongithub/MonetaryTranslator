@@ -9,7 +9,19 @@ namespace MonetaryTranslator
 
         static void Main(string[] args)
         {
-            
+            Console.WriteLine("Please Enter your value");
+            var input = Console.ReadLine();
+
+            try
+            {
+                InputIsValid(input);
+            }
+            catch (ArgumentOutOfRangeException e)
+            {
+                Console.WriteLine("Input is Invald for the following reason:");
+                Console.WriteLine(e.Message);
+                return;
+            }
         }
 
         private static bool InputIsValid(string input)
