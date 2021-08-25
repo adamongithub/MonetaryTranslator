@@ -14,7 +14,7 @@ namespace MonetaryTranslator
 
             try
             {
-                InputIsValid(input);
+                ValdiateInput(input);
             }
             catch (ArgumentOutOfRangeException e)
             {
@@ -22,9 +22,13 @@ namespace MonetaryTranslator
                 Console.WriteLine(e.Message);
                 return;
             }
+
+            input = input.Replace(_Culture.NumberFormat.CurrencySymbol, "");
+
+
         }
 
-        private static bool InputIsValid(string input)
+        private static bool ValdiateInput(string input)
         {
             if (decimal.TryParse(input, NumberStyles.Currency, _Culture, out decimal d)
                 && d >= 0
