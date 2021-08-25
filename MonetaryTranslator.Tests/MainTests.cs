@@ -28,6 +28,17 @@ namespace MonetaryTranslator
             var a = Program.ValidateInput("-£1");
             var b = Program.ValidateInput("-£1,000,000,000");
         }
+        
+        [TestMethod]
+        public void MustExtractWholeAndRemainder()
+        {
+            var remainder = "";
+            var input = "123,456,789.99";
+            var whole = Program.GetWholeAndRemainder(input, ref remainder);
+            Assert.IsTrue(whole == "123,456,789");
+            Assert.IsTrue(remainder == "99");
+        }
+
 
         [TestMethod]
         public void MustWorkWithPence()

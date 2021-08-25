@@ -11,7 +11,6 @@ namespace MonetaryTranslator.App
     {
         private static CultureInfo _Culture = CultureInfo.CreateSpecificCulture("en-GB");
         private static string[] _Units = new[] { "", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
-
         private static string[] _Teens = new[] {
             "",
             "eleven",
@@ -24,7 +23,6 @@ namespace MonetaryTranslator.App
             "eighteen",
             "nineteen"
         };
-
         private static string[] _Tens = new[] {
             "",
             "ten",
@@ -37,7 +35,6 @@ namespace MonetaryTranslator.App
             "eighty",
             "ninety"
         };
-
         private static string[] _Denominations = new string[]
         {
             "pounds",
@@ -49,11 +46,15 @@ namespace MonetaryTranslator.App
         {
             Console.WriteLine("Please Enter your value");
             var input = Console.ReadLine();
+            var whole = String.Empty;
+            var remainder = String.Empty;
 
             try
             {
                 ValidateInput(input);
                 input = input.Replace(_Culture.NumberFormat.CurrencySymbol, "");
+                whole = GetWholeAndRemainder(input, ref remainder);
+                
 
             }
             catch (Exception e)
@@ -86,6 +87,23 @@ namespace MonetaryTranslator.App
                 throw new ArgumentException("Input is not in the correct format.");
 
             }
+        }
+
+        public static string GetWholeAndRemainder(string input, ref string remainder)
+        {
+            string whole;
+            if (input.Contains('.'))
+            {
+                var wholeremainder = input.Split('.');
+                whole = wholeremainder[0];
+                remainder = wholeremainder[1];
+            }
+            else
+            {
+                whole = input;
+            }
+
+            return whole;
         }
     }
 }
