@@ -105,5 +105,13 @@ namespace MonetaryTranslator.App
 
             return whole;
         }
+
+        public static string TranslateFromArray(char index, string[] array, string prefix, string suffix)
+        {
+            var t = array[int.Parse(index.ToString())];
+            return String.IsNullOrEmpty(t) ? "" : prefix + t + suffix;
+        }
+
+
     }
 }

@@ -39,6 +39,12 @@ namespace MonetaryTranslator
             Assert.IsTrue(remainder == "99");
         }
 
+        [TestMethod]
+        public void MustBeAbleToTranslateFromArray()
+        {
+            var a = Program.TranslateFromArray('0', new[] { "a","b","c" }, "prefix ", " suffix");
+            Assert.IsTrue(a == "prefix a suffix");
+        }
 
         [TestMethod]
         public void MustWorkWithPence()
