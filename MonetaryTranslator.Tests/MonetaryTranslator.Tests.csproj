@@ -8,8 +8,8 @@
     <ProjectGuid>{80CFA405-A572-4E38-B4FB-68B9BF1FF2EE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MonetaryTranslator.Tests</RootNamespace>
-    <AssemblyName>MonetaryTranslator.Tests</AssemblyName>
+    <RootNamespace>MonetaryTranslator</RootNamespace>
+    <AssemblyName>MonetaryTranslator</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -54,6 +54,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MonetaryTranslator.App\MonetaryTranslator.App.csproj">
+      <Project>{bd45ed73-e94e-46da-b1ad-1dfa64ab8dcc}</Project>
+      <Name>MonetaryTranslator.App</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

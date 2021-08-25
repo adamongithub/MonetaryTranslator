@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace MonetaryTranslator
+namespace MonetaryTranslator.App
 {
     public static class Program
     {
@@ -16,7 +20,7 @@ namespace MonetaryTranslator
             {
                 ValidateInput(input);
             }
-            catch (ArgumentOutOfRangeException e)
+            catch (Exception e)
             {
                 Console.WriteLine("Input is Invald for the following reason:");
                 Console.WriteLine(e.Message);
@@ -32,17 +36,23 @@ namespace MonetaryTranslator
         /// Known issues:
         /// 1) Allows decimal places greater than 2.
         /// </summary>
-        private static bool ValidateInput(string input)
+        public static bool ValidateInput(string input)
         {
-            if (decimal.TryParse(input, NumberStyles.Currency, _Culture, out decimal d)
-                && d >= 0
-                && d <= 999999999)
-            {
-                return true;
+            if (decimal.TryParse(input, NumberStyles.Currency, _Culture, out decimal d))
+            { 
+                if (d >= 0 && d <= 999999999)
+                {
+                    return true;
+                }
+                else
+                {
+                    throw new ArgumentOutOfRangeException("Number cannot be negative and must be smaller or equal to 10^9.");
+                }
             }
             else
             {
-                throw new ArgumentOutOfRangeException("Number cannot be negative and must be smaller or equal to 10^9.");
+                throw new ArgumentException("Input is not in the correct format.");
+
             }
         }
     }
