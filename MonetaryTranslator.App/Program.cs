@@ -55,7 +55,11 @@ namespace MonetaryTranslator.App
                 ValidateInput(input);
                 input = input.Replace(_Culture.NumberFormat.CurrencySymbol, "");
                 whole = GetWholeAndRemainder(input, ref remainder);
-                
+
+                var groups = whole.Split(',');
+                var strings = new List<String>();
+
+                strings.Add(String.IsNullOrEmpty(pence) ? "" : " and " + pence + " pence");
 
             }
             catch (Exception e)
