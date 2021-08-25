@@ -28,6 +28,10 @@ namespace MonetaryTranslator
 
         }
 
+        /// <summary>
+        /// Known issues:
+        /// 1) Allows decimal places greater than 2.
+        /// </summary>
         private static bool ValdiateInput(string input)
         {
             if (decimal.TryParse(input, NumberStyles.Currency, _Culture, out decimal d)
