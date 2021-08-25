@@ -47,6 +47,12 @@ namespace MonetaryTranslator
         }
 
         [TestMethod]
+        public void MustTranslateTens()
+        {
+            Assert.IsTrue(Program.ProcessTens("01").Contains("one"));
+            Assert.IsTrue(Program.ProcessTens("11", 0, 1).Contains("eleven"));
+        }
+        [TestMethod]
         public void MustWorkWithPence()
         {
 

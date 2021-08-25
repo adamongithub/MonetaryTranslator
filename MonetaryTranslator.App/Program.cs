@@ -48,6 +48,7 @@ namespace MonetaryTranslator.App
             var input = Console.ReadLine();
             var whole = String.Empty;
             var remainder = String.Empty;
+            string pence = ProcessTens(remainder, 0, 1);
 
             try
             {
@@ -111,7 +112,20 @@ namespace MonetaryTranslator.App
             var t = array[int.Parse(index.ToString())];
             return String.IsNullOrEmpty(t) ? "" : prefix + t + suffix;
         }
+        public static string ProcessTens(string str, int firstIndex = 0, int secondIndex = 1)
+        {
+            string output = "";
+            if (str[firstIndex] == '1')
+            {
+                output += TranslateFromArray(str[secondIndex], _Teens, " and ", "");
+            }
+            else
+            {
+                output += TranslateFromArray(str[firstIndex], _Tens, " and ", "");
+                output += TranslateFromArray(str[secondIndex], _Units, "", "");
+            }
 
-
+            return output;
+        }
     }
 }
