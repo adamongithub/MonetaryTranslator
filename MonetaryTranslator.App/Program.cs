@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MonetaryTranslator.App
 {
@@ -46,27 +44,18 @@ namespace MonetaryTranslator.App
         {
             Console.WriteLine("Please Enter your value");
             var input = Console.ReadLine();
-            var whole = String.Empty;
-            var remainder = String.Empty;
-            string pence = ProcessTens(remainder, 0, 1);
 
             try
             {
-                ValidateInput(input);
-                input = input.Replace(_Culture.NumberFormat.CurrencySymbol, "");
-                whole = GetWholeAndRemainder(input, ref remainder);
-
-                var groups = whole.Split(',');
-                var strings = new List<String>();
-
-                strings.Add(String.IsNullOrEmpty(pence) ? "" : " and " + pence + " pence");
-
+                ValidateInput(input);                
+                Console.WriteLine(ProcessInput(input));
+                Console.ReadLine();
             }
             catch (Exception e)
             {
-                Console.WriteLine("Input is Invald for the following reason:");
+                Console.WriteLine("Input is Invalid for the following reason:");
                 Console.WriteLine(e.Message);
-                return;
+                Console.ReadLine();
             }
         }
 
@@ -130,6 +119,51 @@ namespace MonetaryTranslator.App
             }
 
             return output;
+        }
+
+        public static string TranslateAndAddDenomination(string group, string denomination, bool first = false)
+        {
+            string output = TranslateGroup(group);
+            output += " " + (String.IsNullOrEmpty(output) && !first ? "" : denomination);
+            return output;
+        }
+
+        public static string TranslateGroup(string str)
+        {
+            var output = string.Empty;
+
+            output += TranslateFromArray(str[0], _Units, "", " hundred");
+            output += ProcessTens(str, 1, 2);
+
+            return output;
+        }
+
+        public static string ProcessInput(string input)
+        {
+            var remainder = String.Empty;
+            var whole = GetWholeAndRemainder(input, ref remainder);           
+            whole = whole.Replace(_Culture.NumberFormat.CurrencySymbol, "");
+
+            var groups = whole.Split(',');
+            var strings = new List<String>();
+            if (!String.IsNullOrEmpty(remainder))
+            {
+                string pence = ProcessTens(remainder, 0, 1);
+                strings.Add(String.IsNullOrEmpty(pence) ? "" : "and " + pence + " pence");
+            }
+
+            var i = 0;
+            for (var j = groups.Length - 1; j >= 0; j--)
+            {
+                if (groups[j] != null)
+                {
+                    strings.Add(TranslateAndAddDenomination(groups[j].PadLeft(3, '0'), _Denominations[i], i == 0));
+                    i++;
+                }
+            }
+
+            strings.Reverse();
+            return String.Join(" ", strings);
         }
     }
 }

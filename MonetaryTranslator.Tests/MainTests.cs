@@ -52,16 +52,29 @@ namespace MonetaryTranslator
             Assert.IsTrue(Program.ProcessTens("01").Contains("one"));
             Assert.IsTrue(Program.ProcessTens("11", 0, 1).Contains("eleven"));
         }
-        [TestMethod]
-        public void MustWorkWithPence()
-        {
 
+        [TestMethod]
+        public void MustTranslateAndAddDenomination()
+        {
+            Assert.IsTrue(Program.TranslateAndAddDenomination("100", "pounds") == "one hundred pounds");
         }
 
         [TestMethod]
-        public void MustBeWithinoutPence()
+        public void MustTranslateAGroupOfNumbers()
         {
+            Assert.IsTrue(Program.TranslateGroup("123") == "one hundred and twentythree");
+        }
 
+        [TestMethod]
+        public void MustWorkWithPence()
+        {
+            Assert.IsTrue(Program.ProcessInput("£3,496,002.08") == "three million four hundred and ninetysix thousand two pounds and eight pence");
+        }
+
+        [TestMethod]
+        public void MustWorkWithoutPence()
+        {
+            Assert.IsTrue(Program.ProcessInput("£3,496,002") == "three million four hundred and ninetysix thousand two pounds");
         }
     }
 }
