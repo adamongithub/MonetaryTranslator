@@ -23,5 +23,17 @@ namespace MonetaryTranslator.Tests
         {
 
         }
+
+        [TestMethod]
+        public void MustWorkWithPence()
+        {
+
+        }
+
+        [TestMethod]
+        public void MustBeWithinoutPence()
+        {
+
+        }
     }
 }
