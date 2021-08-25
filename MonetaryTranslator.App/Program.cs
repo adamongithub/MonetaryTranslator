@@ -100,22 +100,39 @@ namespace MonetaryTranslator.App
             return whole;
         }
 
-        public static string TranslateFromArray(char index, string[] array, string prefix, string suffix)
+        public static string TranslateGroup(string group)
         {
-            var t = array[int.Parse(index.ToString())];
-            return String.IsNullOrEmpty(t) ? "" : prefix + t + suffix;
-        }
-        public static string ProcessTens(string str, int firstIndex = 0, int secondIndex = 1)
-        {
+            var hundreds = char.GetNumericValue(group[0]) > 0;
+            var tens = char.GetNumericValue(group[1]) > 0;
+            var units = char.GetNumericValue(group[2]) > 0;
+            var combined = false;
+
             string output = "";
-            if (str[firstIndex] == '1')
+            
+            if (hundreds)
             {
-                output += TranslateFromArray(str[secondIndex], _Teens, " and ", "");
+                output += _Units[int.Parse(group[0].ToString())];
+                output += " hundred";
             }
-            else
+
+            if (tens)
             {
-                output += TranslateFromArray(str[firstIndex], _Tens, " and ", "");
-                output += TranslateFromArray(str[secondIndex], _Units, "", "");
+                output += hundreds ? " and " : "";
+
+                if (group[1] == '1')
+                {
+                    combined = true;
+                    output += _Teens[int.Parse(group[1].ToString())];
+                }
+                else
+                {
+                    output += _Tens[int.Parse(group[1].ToString())];
+                }
+            }
+
+            if (units && !combined)
+            {
+                output += _Units[int.Parse(group[2].ToString())];
             }
 
             return output;
@@ -125,16 +142,6 @@ namespace MonetaryTranslator.App
         {
             string output = TranslateGroup(group);
             output += " " + (String.IsNullOrEmpty(output) && !first ? "" : denomination);
-            return output;
-        }
-
-        public static string TranslateGroup(string str)
-        {
-            var output = string.Empty;
-
-            output += TranslateFromArray(str[0], _Units, "", " hundred");
-            output += ProcessTens(str, 1, 2);
-
             return output;
         }
 
@@ -148,7 +155,7 @@ namespace MonetaryTranslator.App
             var strings = new List<String>();
             if (!String.IsNullOrEmpty(remainder))
             {
-                string pence = ProcessTens(remainder, 0, 1);
+                string pence = TranslateGroup(remainder.PadLeft(3, '0'));
                 strings.Add(String.IsNullOrEmpty(pence) ? "" : "and " + pence + " pence");
             }
 

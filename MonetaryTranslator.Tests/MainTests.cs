@@ -40,17 +40,15 @@ namespace MonetaryTranslator
         }
 
         [TestMethod]
-        public void MustBeAbleToTranslateFromArray()
+        public void MustBeAbleToTranslateAnyNumberFromAGroup()
         {
-            var a = Program.TranslateFromArray('0', new[] { "a","b","c" }, "prefix ", " suffix");
-            Assert.IsTrue(a == "prefix a suffix");
-        }
+            var a = Program.TranslateGroup("001");
+            Assert.IsTrue(a == "one");
+            var b = Program.TranslateGroup("011");
+            Assert.IsTrue(b == "eleven");
+            var c = Program.TranslateGroup("123");
+            Assert.IsTrue(c == "one hundred and twentythree");
 
-        [TestMethod]
-        public void MustTranslateTens()
-        {
-            Assert.IsTrue(Program.ProcessTens("01").Contains("one"));
-            Assert.IsTrue(Program.ProcessTens("11", 0, 1).Contains("eleven"));
         }
 
         [TestMethod]
