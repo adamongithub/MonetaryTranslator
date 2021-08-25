@@ -10,6 +10,40 @@ namespace MonetaryTranslator.App
     public static class Program
     {
         private static CultureInfo _Culture = CultureInfo.CreateSpecificCulture("en-GB");
+        private static string[] _Units = new[] { "", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
+
+        private static string[] _Teens = new[] {
+            "",
+            "eleven",
+            "twelve",
+            "thirteen",
+            "fourteen",
+            "fifteen",
+            "sixteen",
+            "seventeen",
+            "eighteen",
+            "nineteen"
+        };
+
+        private static string[] _Tens = new[] {
+            "",
+            "ten",
+            "twenty",
+            "thirty",
+            "forty",
+            "fifty",
+            "sixty",
+            "seventy",
+            "eighty",
+            "ninety"
+        };
+
+        private static string[] _Denominations = new string[]
+        {
+            "pounds",
+            "thousand",
+            "million"
+        };
 
         public static void Main(string[] args)
         {
@@ -19,6 +53,8 @@ namespace MonetaryTranslator.App
             try
             {
                 ValidateInput(input);
+                input = input.Replace(_Culture.NumberFormat.CurrencySymbol, "");
+
             }
             catch (Exception e)
             {
@@ -26,10 +62,6 @@ namespace MonetaryTranslator.App
                 Console.WriteLine(e.Message);
                 return;
             }
-
-            input = input.Replace(_Culture.NumberFormat.CurrencySymbol, "");
-
-
         }
 
         /// <summary>
