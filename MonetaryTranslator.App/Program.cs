@@ -125,7 +125,7 @@ namespace MonetaryTranslator.App
                 if (group[1] == '1')
                 {
                     combined = true;
-                    output += _Teens[int.Parse(group[1].ToString())];
+                    output += _Teens[int.Parse(group[2].ToString())];
                 }
                 else
                 {
