@@ -42,21 +42,24 @@ namespace MonetaryTranslator.App
 
         public static void Main(string[] args)
         {
-            Console.WriteLine("Please Enter your value");
-            var input = Console.ReadLine();
-
-            try
+            string input = String.Empty;
+            do
             {
-                ValidateInput(input);                
-                Console.WriteLine(ProcessInput(input));
-                Console.ReadLine();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Input is Invalid for the following reason:");
-                Console.WriteLine(e.Message);
-                Console.ReadLine();
-            }
+                Console.WriteLine("Please Enter a value to be translated (or x to quit)");
+                input = Console.ReadLine();
+                
+                try
+                {
+                    ValidateInput(input);
+                    Console.WriteLine(ProcessInput(input));
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Input is Invalid for the following reason:");
+                    Console.WriteLine(e.Message);
+                }
+                
+            } while (!input.ToLowerInvariant().Equals("x"));
         }
 
         /// <summary>
